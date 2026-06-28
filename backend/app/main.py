@@ -12,6 +12,11 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+try:
+    from prometheus_fastapi_instrumentator import Instrumentator
+except ImportError:  # пакет мониторинга необязателен (DO-06, низкий приоритет)
+    Instrumentator = None
+
 from app.api import documents, search
 from app.core.clients import (
     get_cache_service,
@@ -125,6 +130,20 @@ async def handle_app_error(_: Request, exc: AppError) -> JSONResponse:
 # --- Роутеры ---
 app.include_router(documents.router, prefix=settings.api_v1_prefix)
 app.include_router(search.router, prefix=settings.api_v1_prefix)
+
+
+# --- Мониторинг (DO-06) ---
+# Экспортируем метрики Prometheus по адресу /metrics: количество запросов и
+# время ответа по каждому эндпоинту (в т.ч. /api/v1/search), что используется
+# дашбордом Grafana. Если пакет не установлен, приложение работает без метрик.
+if Instrumentator is not None:
+    Instrumentator().instrument(app).expose(
+        app, endpoint="/metrics", include_in_schema=False, tags=["Служебные"]
+    )
+else:  # pragma: no cover
+    logger.warning(
+        "prometheus-fastapi-instrumentator не установлен — метрики отключены"
+    )
 
 
 # --- Служебные эндпоинты ---

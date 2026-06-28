@@ -1,0 +1,491 @@
+/* Глобальные стили. Адаптивная вёрстка от 320px до 1920px (FE-09). */
+
+:root {
+  --color-bg: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-border: #e2e6ef;
+  --color-text: #1f2430;
+  --color-muted: #6b7280;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-danger: #dc2626;
+  --color-highlight: #fff3a3;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --max-width: 1100px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* --- Каркас приложения --- */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.app__logo {
+  font-size: 1.4rem;
+}
+
+.app__nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.app__navlink {
+  text-decoration: none;
+  color: var(--color-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+
+.app__navlink--active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.app__main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+}
+
+.app__footer {
+  text-align: center;
+  padding: 1rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* --- Панели и страницы --- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+}
+
+/* --- Кнопки --- */
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:not(:disabled):hover {
+  background: var(--color-primary-dark);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.btn--ghost:not(:disabled):hover {
+  background: var(--color-bg);
+}
+
+.btn--danger {
+  background: transparent;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn--danger:not(:disabled):hover {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.btn--small {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+/* --- Зона загрузки (FE-01) --- */
+
+.dropzone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone:hover,
+.dropzone--active {
+  border-color: var(--color-primary);
+  background: rgba(37, 99, 235, 0.04);
+}
+
+.dropzone__title {
+  margin: 0 0 0.35rem;
+  font-weight: 500;
+}
+
+.dropzone__hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* --- Список задач загрузки (FE-02) --- */
+
+.upload__list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.upload__item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.upload__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload__message {
+  grid-column: 1 / -1;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+/* --- Бейджи статусов (FE-02, FE-03) --- */
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge--uploading,
+.badge--indexing {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge--ready,
+.badge--done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge--error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* --- Спиннер --- */
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Список документов (FE-03) --- */
+
+.doclist {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.doclist__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.doclist__header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.doclist__table-wrap {
+  overflow-x: auto;
+}
+
+.doclist__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.doclist__table th,
+.doclist__table td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.doclist__table th {
+  color: var(--color-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.doclist__name {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.doclist__error {
+  color: var(--color-danger);
+  cursor: help;
+}
+
+/* --- Поиск (FE-04) --- */
+
+.searchbar {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.searchbar__input {
+  flex: 1;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.searchbar__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* --- Результаты (FE-05) --- */
+
+.results__summary {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.results__cache {
+  color: var(--color-primary);
+}
+
+.results__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.results__status,
+.results__empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 1.5rem 0;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow);
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.card__file {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+
+.card__page {
+  color: var(--color-muted);
+}
+
+.card__score {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-weight: 600;
+}
+
+.card__text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Подсветка совпадений жёлтым фоном (FE-06). */
+.card__text mark {
+  background: var(--color-highlight);
+  padding: 0 0.1em;
+  border-radius: 3px;
+}
+
+/* --- Пагинация (FE-07) --- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.pagination__info {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* --- Прочее --- */
+
+.muted {
+  color: var(--color-muted);
+}
+
+.error-text {
+  color: var(--color-danger);
+}
+
+/* --- Адаптивность (FE-09) --- */
+
+@media (max-width: 640px) {
+  .app__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .searchbar {
+    flex-direction: column;
+  }
+
+  .doclist__name {
+    max-width: 140px;
+  }
+
+  .app__main {
+    padding: 1rem 0.75rem;
+  }
+}

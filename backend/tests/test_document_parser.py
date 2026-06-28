@@ -131,11 +131,15 @@ FIXTURES_DIR = os.path.join(os.path.dirname(__file__), "fixtures")
 )
 class TestExtractPdfFromFixtures:
     def test_sample_pdf_parsed(self):
+        # Берём только заведомо корректные PDF (valid_*.pdf); пустые и битые
+        # файлы из набора QA-03 проверяются отдельными тестами.
         pdf_files = [
-            f for f in os.listdir(FIXTURES_DIR) if f.lower().endswith(".pdf")
+            f
+            for f in os.listdir(FIXTURES_DIR)
+            if f.lower().endswith(".pdf") and f.lower().startswith("valid")
         ]
         if not pdf_files:
-            pytest.skip("Нет PDF-файлов в tests/fixtures")
+            pytest.skip("Нет корректных PDF-файлов в tests/fixtures")
         with open(os.path.join(FIXTURES_DIR, pdf_files[0]), "rb") as fh:
             file_bytes = fh.read()
         pages = extract_text(file_bytes, "pdf")

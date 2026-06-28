@@ -21,6 +21,15 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  front:
+    build: ./frontend
+    container_name: knowledge_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
   postgres:
     image: postgres:16-alpine
     container_name: knowledge_postgres
@@ -71,7 +80,38 @@ services:
       retries: 10
     restart: unless-stopped
 
+  # --- Мониторинг (DO-06) ---
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: knowledge_prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: knowledge_grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   es_data:
   redis_data:
+  prometheus_data:
+  grafana_data:

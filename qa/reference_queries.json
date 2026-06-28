@@ -1,0 +1,15 @@
+{
+  "description": "Эталонные запросы для оценки качества поиска Precision@3 (QA-05). Ожидаемое имя документа соответствует файлам, загружаемым скриптом init.sh.",
+  "queries": [
+    { "query": "attention is all you need transformer self-attention", "expected": "attention_is_all_you_need.pdf" },
+    { "query": "BERT bidirectional encoder pretraining language model", "expected": "bert.pdf" },
+    { "query": "deep residual learning image recognition ResNet", "expected": "deep_residual_learning.pdf" },
+    { "query": "very deep convolutional networks VGG large-scale", "expected": "vgg_very_deep_cnn.pdf" },
+    { "query": "generative adversarial networks discriminator generator", "expected": "generative_adversarial_networks.pdf" },
+    { "query": "auto-encoding variational bayes latent variable", "expected": "variational_autoencoder.pdf" },
+    { "query": "efficient estimation word representations vector space", "expected": "word2vec.pdf" },
+    { "query": "u-net convolutional networks biomedical image segmentation", "expected": "unet_segmentation.pdf" },
+    { "query": "batch normalization internal covariate shift", "expected": "batch_normalization.pdf" },
+    { "query": "adam method stochastic optimization gradient", "expected": "adam_optimizer.pdf" }
+  ]
+}
