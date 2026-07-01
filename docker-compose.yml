@@ -1,4 +1,5 @@
-version: "3.9"
+# Единый файл запуска всего проекта: одна команда `docker compose up --build`
+# поднимает бэкенд, фронтенд, PostgreSQL, Elasticsearch, Redis и мониторинг.
 
 services:
   app:
@@ -19,6 +20,16 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     restart: unless-stopped
 
   front:
@@ -27,7 +38,8 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     restart: unless-stopped
 
   postgres:

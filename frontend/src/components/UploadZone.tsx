@@ -1,7 +1,7 @@
 // Зона загрузки документов с Drag-and-Drop и множественной загрузкой (FE-01),
 // отображением прогресса/статуса каждого файла (FE-02).
 
-import { useCallback, useRef, useState } from "react";
+import { type DragEvent, useCallback, useRef, useState } from "react";
 
 import { ApiError, uploadDocument } from "../services/api";
 import type { UploadTask } from "../types";
@@ -86,7 +86,7 @@ export function UploadZone({ onUploaded }: UploadZoneProps) {
   );
 
   const onDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
+    (event: DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       setIsDragOver(false);
       handleFiles(event.dataTransfer.files);
