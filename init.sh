@@ -52,14 +52,17 @@ trap cleanup EXIT
 
 echo "==> Ожидание готовности API: ${HEALTH_ENDPOINT}"
 for attempt in $(seq 1 30); do
-  if curl -sf "${HEALTH_ENDPOINT}" >/dev/null 2>&1; then
+  # --connect-timeout не даёт «зависнуть», если хост недоступен/не резолвится.
+  if curl -sf --connect-timeout 3 "${HEALTH_ENDPOINT}" >/dev/null 2>&1; then
     echo "    API доступен."
     break
   fi
   if [ "${attempt}" -eq 30 ]; then
-    echo "    ОШИБКА: API не отвечает после 30 попыток." >&2
+    echo "    ОШИБКА: API не отвечает после 30 попыток по адресу ${HEALTH_ENDPOINT}." >&2
+    echo "    Проверьте, что стек запущен и адрес верный (API_URL)." >&2
     exit 1
   fi
+  echo "    Попытка ${attempt}/30: API пока не отвечает, ждём..."
   sleep 2
 done
 

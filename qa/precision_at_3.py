@@ -47,17 +47,23 @@ def evaluate() -> None:
     with open(QUERIES_PATH, encoding="utf-8") as fh:
         queries = json.load(fh)["queries"]
 
+    print(f"Оценка Precision@3 · API: {API_URL} · запросов: {len(queries)}\n")
+
     rows: list[str] = []
     hits = 0
 
-    for entry in queries:
+    for i, entry in enumerate(queries, start=1):
         query = entry["query"]
         expected = entry["expected"]
+        print(f"[{i}/{len(queries)}] Запрос: {query!r} ... ", end="", flush=True)
         try:
             top = search_top_filenames(query)
         except Exception as exc:  # noqa: BLE001
             top = []
-            print(f"Ошибка запроса {query!r}: {exc}")
+            print(f"ОШИБКА: {exc}")
+        else:
+            found_now = expected in top
+            print("найден ✓" if found_now else "не найден ✗")
 
         found = expected in top
         if found:

@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 // E2E-тест критического сценария (QA-02):
 // загрузка документа → индексация → поиск → отображение результатов.
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+//
+// В тест-файлах Playwright доступен глобальный __dirname (CommonJS),
+// поэтому дополнительные вычисления пути через import.meta не нужны.
 
 // Корректная фикстура, генерируется скриптом
 // backend/tests/fixtures/generate_fixtures.py
