@@ -1,8 +1,9 @@
 """Юнит-тесты сервиса кеширования Redis (BE-10)."""
 
 import json
-import pytest
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
 
 from app.services.cache import CacheService
 

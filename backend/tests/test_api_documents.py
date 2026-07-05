@@ -1,8 +1,10 @@
 """Интеграционные тесты эндпоинтов документов (BE-01, BE-02)."""
 
 import io
-import pytest
+from datetime import UTC
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from app.models.document import Document, DocumentStatus
 
@@ -78,10 +80,10 @@ class TestListDocuments:
         assert response.json()["items"] == []
 
     async def test_returns_documents(self, async_client, mock_db_session):
-        from datetime import datetime, timezone
+        from datetime import datetime
         doc = make_document()
-        doc.created_at = datetime(2024, 1, 1, tzinfo=timezone.utc)
-        doc.updated_at = datetime(2024, 1, 1, tzinfo=timezone.utc)
+        doc.created_at = datetime(2024, 1, 1, tzinfo=UTC)
+        doc.updated_at = datetime(2024, 1, 1, tzinfo=UTC)
 
         with patch(
             "app.services.document_service.list_documents",
@@ -103,10 +105,10 @@ class TestGetDocument:
         assert response.status_code == 404
 
     async def test_found_returns_200(self, async_client, mock_db_session):
-        from datetime import datetime, timezone
+        from datetime import datetime
         doc = make_document()
-        doc.created_at = datetime(2024, 1, 1, tzinfo=timezone.utc)
-        doc.updated_at = datetime(2024, 1, 1, tzinfo=timezone.utc)
+        doc.created_at = datetime(2024, 1, 1, tzinfo=UTC)
+        doc.updated_at = datetime(2024, 1, 1, tzinfo=UTC)
 
         with patch(
             "app.services.document_service.get_document",

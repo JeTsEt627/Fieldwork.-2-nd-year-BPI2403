@@ -93,10 +93,68 @@ npm run dev          # http://localhost:5173, проксирует /api на :80
 
 ## Тестирование
 
-```bash
+В проекте четыре вида тестов. Ниже команды для **PowerShell (Windows)**.
+
+> На Windows используйте `python`, а не `python3` (последнее — нерабочая
+> заглушка Microsoft Store). Если открыт venv-терминал VS Code, окружение уже
+> активировано (в начале строки `(.venv)`).
+
+### 1. Юнит-тесты бэкенда (QA-01, QA-03) — не требуют Docker
+
+```powershell
 cd backend
-pytest --cov=app --cov-report=term-missing   # юнит-тесты + покрытие
+.\.venv\Scripts\Activate.ps1                  # активировать venv (если не активен)
+pytest                                        # все тесты
+pytest --cov=app --cov-report=term-missing    # с отчётом о покрытии
 ```
+
+Ожидается **115 passed, 2 skipped**, покрытие ~80%. Полезные варианты:
+
+```powershell
+pytest tests/test_file_validation.py          # один файл
+pytest -k "docx"                              # тесты с "docx" в имени
+```
+
+> Чтобы прошли 2 пропущенных PDF-теста — установите `reportlab` и сгенерируйте
+> PDF-фикстуры:
+> ```powershell
+> pip install reportlab
+> python tests/fixtures/generate_fixtures.py
+> ```
+
+### 2. E2E-тесты — Playwright (QA-02) — требуют запущенного стека
+
+```powershell
+cd e2e
+npm install
+npx playwright install chromium               # один раз — скачать браузер
+npm test                                      # прогон (3 сценария)
+npm run report                                # HTML-отчёт (не закрывать терминал)
+```
+
+### 3. Нагрузочные тесты — Locust (QA-04) — требуют запущенного стека
+
+```powershell
+pip install -r qa/requirements.txt
+locust -f qa/load/locustfile.py --host http://localhost:8000 `
+    --users 50 --spawn-rate 10 --run-time 2m --headless `
+    --html qa/load/report.html
+```
+
+Отчёт о времени отклика — в консоли и в `qa/load/report.html`.
+
+### 4. Качество поиска — Precision@3 (QA-05) — требуют запущенного стека
+
+Сначала загрузите документы (`bash init.sh`), затем:
+
+```powershell
+python qa/precision_at_3.py
+```
+
+Результат — таблица в консоли и файл `qa/precision_report.md`.
+
+> Тесты п. 2–4 работают против поднятого приложения: сначала `docker compose up -d`,
+> проверьте `docker compose ps` (сервисы `Up/healthy`) и http://localhost:8000/health.
 
 ## CI/CD (DO-05)
 

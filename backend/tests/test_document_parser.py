@@ -6,12 +6,12 @@
 
 import io
 import os
-import pytest
 
+import pytest
 from docx import Document as DocxDocument
+
 from app.core.exceptions import DocumentParsingError, EmptyDocumentError
 from app.services.document_parser import ParsedPage, extract_text, normalize_text
-
 
 # --------------------------------------------------------------------------- #
 # Вспомогательные фабрики                                                     #

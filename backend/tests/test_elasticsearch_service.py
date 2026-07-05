@@ -1,7 +1,8 @@
 """Юнит-тесты сервиса Elasticsearch (BE-06, BE-07, BE-08)."""
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from app.core.exceptions import SearchServiceError
 from app.services.chunker import TextChunk
@@ -9,7 +10,6 @@ from app.services.elasticsearch_service import (
     ElasticsearchService,
     build_chunk_id,
 )
-
 
 # --------------------------------------------------------------------------- #
 # build_chunk_id                                                               #

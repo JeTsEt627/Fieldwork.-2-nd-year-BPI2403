@@ -20,6 +20,21 @@ ignore = [
 [lint.per-file-ignores]
 "tests/*" = ["N801", "N802", "B011"]  # допускаем вольные имена в тестах
 
+[lint.flake8-bugbear]
+# Вызовы FastAPI в значениях по умолчанию (File/Query/Depends и т.п.) — это
+# штатный идиоматический приём фреймворка, а не изменяемый дефолт (B008).
+extend-immutable-calls = [
+    "fastapi.File",
+    "fastapi.Form",
+    "fastapi.Body",
+    "fastapi.Query",
+    "fastapi.Path",
+    "fastapi.Header",
+    "fastapi.Cookie",
+    "fastapi.Depends",
+    "fastapi.Security",
+]
+
 [format]
 quote-style = "double"
 indent-style = "space"

@@ -1,8 +1,8 @@
 """Интеграционные тесты поискового эндпоинта (BE-08, BE-09, BE-10)."""
 
-import pytest
 from unittest.mock import AsyncMock, patch
 
+import pytest
 
 SEARCH_RESULT = {
     "query": "машинное обучение",

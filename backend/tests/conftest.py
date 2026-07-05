@@ -1,13 +1,14 @@
 """Общие фикстуры для тестов бэкенда."""
 
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
 from httpx import ASGITransport, AsyncClient
-from unittest.mock import AsyncMock, MagicMock
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.main import app
-from app.services.elasticsearch_service import ElasticsearchService
 from app.services.cache import CacheService
+from app.services.elasticsearch_service import ElasticsearchService
 
 
 @pytest.fixture
