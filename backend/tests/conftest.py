@@ -3,6 +3,7 @@
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
+import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -54,7 +55,7 @@ def mock_db_session() -> AsyncSession:
     return session
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def async_client(mock_es_service, mock_cache_service, mock_db_session):
     """Асинхронный тестовый клиент FastAPI с заменёнными зависимостями."""
     from app.core.clients import get_cache_service, get_es_service
